@@ -1,0 +1,28 @@
+{
+  "defaults": {
+    "standard": "WCAG2AA",
+    "timeout": 30000,
+    "wait": 2000,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox"]
+    },
+    "ignore": []
+  },
+  "urls": [
+    "http://localhost:3000/",
+    "http://localhost:3000/sign",
+    "http://localhost:3000/the-case",
+    "http://localhost:3000/the-case/history",
+    "http://localhost:3000/the-case/the-rivers",
+    "http://localhost:3000/voices",
+    "http://localhost:3000/voices/share",
+    "http://localhost:3000/volunteer",
+    "http://localhost:3000/donate",
+    "http://localhost:3000/faq",
+    "http://localhost:3000/about",
+    "http://localhost:3000/blog",
+    "http://localhost:3000/press",
+    "http://localhost:3000/privacy",
+    "http://localhost:3000/terms"
+  ]
+}

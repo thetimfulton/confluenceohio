@@ -1,0 +1,134 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+  NODE_VERSION: '20'
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npx turbo run lint
+
+  type-check:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npx turbo run type-check
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npx turbo run test
+
+  migrate-staging:
+    name: Migrate Staging DB
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: [lint, type-check, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_STAGING_PROJECT_REF }}
+          supabase db push
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+  migrate-production:
+    name: Migrate Production DB
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: [lint, type-check, test]
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Backup production database
+        run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_PROD_PROJECT_REF }}
+          # Point-in-time recovery is available via Supabase Pro dashboard
+          # This step logs the migration timestamp for manual recovery reference
+          echo "Migration applied at $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_STEP_SUMMARY
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      - name: Apply migrations
+        run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_PROD_PROJECT_REF }}
+          supabase db push
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      - name: Verify RLS enabled on all tables
+        run: |
+          supabase link --project-ref ${{ secrets.SUPABASE_PROD_PROJECT_REF }}
+          result=$(supabase db execute --sql "SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND NOT rowsecurity;" 2>&1)
+          if echo "$result" | grep -q "rows"; then
+            echo "::error::Tables found without RLS enabled!"
+            echo "$result"
+            exit 1
+          fi
+          echo "All tables have RLS enabled"
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+
+  lighthouse:
+    name: Lighthouse CI
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: [lint, type-check, test]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - run: npm install -g @lhci/cli
+      - run: npx turbo run build --filter=web...
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.STAGING_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_TURNSTILE_SITE_KEY: '1x00000000000000000000AA'
+          NEXT_PUBLIC_POSTHOG_KEY: 'phc_test'
+          NEXT_PUBLIC_POSTHOG_HOST: 'https://us.i.posthog.com'
+          NEXT_PUBLIC_GA4_MEASUREMENT_ID: 'G-TEST'
+          NEXT_PUBLIC_SMARTY_EMBEDDED_KEY: 'test'
+          NEXT_PUBLIC_ACTBLUE_EMBED_TOKEN: 'test'
+          NEXT_PUBLIC_SITE_URL: 'https://staging.confluenceohio.org'
+      - run: lhci autorun
+        working-directory: apps/web

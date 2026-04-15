@@ -1,0 +1,39 @@
+{
+  "name": "@confluenceohio/core",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./env": "./env.ts",
+    "./petition/dedup": "./petition/dedup.ts",
+    "./donations/types": "./donations/types.ts",
+    "./donations/parse-webhook": "./donations/parse-webhook.ts",
+    "./donations/refcode": "./donations/refcode.ts",
+    "./voices/types": "./voices/types.ts",
+    "./voices/moderation": "./voices/moderation.ts",
+    "./voices/moderate": "./voices/moderate.ts",
+    "./voices/validation": "./voices/validation.ts",
+    "./voices/slug": "./voices/slug.ts",
+    "./sharing/build-share-url": "./sharing/build-share-url.ts",
+    "./sharing/share-messages": "./sharing/share-messages.ts",
+    "./sharing/track-share-event": "./sharing/track-share-event.ts",
+    "./referral/utils": "./referral/utils.ts",
+    "./analytics/posthog-server": "./analytics/posthog-server.ts",
+    "./analytics/track-event": "./analytics/track-event.ts",
+    "./analytics/compute-trend": "./analytics/compute-trend.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "nanoid": "^5.1.7",
+    "posthog-js": "^1.368.2",
+    "posthog-node": "^5.29.2",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "vitest": "^4.1.4"
+  }
+}

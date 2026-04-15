@@ -1,0 +1,25 @@
+{
+  "name": "@confluenceohio/email",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./index.ts",
+    "./types": "./types.ts",
+    "./templates": "./templates.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "setup": "tsx brevo-setup.ts"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0",
+    "vitest": "^4.1.4"
+  }
+}

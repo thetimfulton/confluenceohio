@@ -1,0 +1,44 @@
+{
+  "name": "@confluenceohio/ui",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./share-buttons": "./components/share-buttons.tsx",
+    "./copy-link-button": "./components/copy-link-button.tsx",
+    "./share-popover": "./components/share-popover.tsx",
+    "./json-ld": "./components/json-ld.tsx",
+    "./tracked-cta": "./components/tracked-cta.tsx",
+    "./hooks/use-form-analytics": "./hooks/use-form-analytics.ts",
+    "./hooks/use-scroll-tracking": "./hooks/use-scroll-tracking.ts",
+    "./hooks/use-feature-flag": "./hooks/use-feature-flag.ts",
+    "./a11y": "./src/a11y/index.ts",
+    "./a11y/skip-link": "./src/a11y/SkipLink.tsx",
+    "./a11y/visually-hidden": "./src/a11y/VisuallyHidden.tsx",
+    "./a11y/focus-trap": "./src/a11y/FocusTrap.tsx",
+    "./a11y/reduced-motion": "./src/a11y/ReducedMotion.tsx",
+    "./a11y/error-announcer": "./src/a11y/ErrorAnnouncer.tsx"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "posthog-js": "^1.0.0",
+    "react": "^19",
+    "react-dom": "^19"
+  },
+  "dependencies": {
+    "@confluenceohio/core": "file:../core"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "jsdom": "^29.0.2",
+    "posthog-js": "^1.368.2",
+    "typescript": "^5.5.0",
+    "vitest": "^4.1.4"
+  }
+}
