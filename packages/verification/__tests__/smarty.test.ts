@@ -3,7 +3,7 @@ import {
   verifySmartyAddress,
   MockSmartyAdapter,
   SmartyApiError,
-} from '../smarty.js';
+} from '../smarty';
 
 // ---------------------------------------------------------------------------
 // Helpers — build a realistic Smarty US Street API response

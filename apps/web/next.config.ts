@@ -1,3 +1,4 @@
+import path from 'node:path';
 import type { NextConfig } from 'next';
 import bundleAnalyzer from '@next/bundle-analyzer';
 
@@ -6,6 +7,9 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const nextConfig: NextConfig = {
+  // Monorepo: tell Next.js the workspace root so it finds the right lockfile
+  outputFileTracingRoot: path.join(import.meta.dirname, '../../'),
+
   // Turborepo: transpile workspace packages
   transpilePackages: [
     '@confluenceohio/core',
@@ -60,7 +64,6 @@ const nextConfig: NextConfig = {
   // Bundle optimization
   experimental: {
     optimizePackageImports: ['lucide-react', '@confluenceohio/ui'],
-    largePageDataWarning: true,
   },
 
   // PostHog reverse proxy — avoids ad blocker interference (~15–25% more events)

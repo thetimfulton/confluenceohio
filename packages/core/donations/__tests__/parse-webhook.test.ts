@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseActBlueWebhook } from '../parse-webhook.js';
+import { parseActBlueWebhook } from '../parse-webhook';
 
 // ---------------------------------------------------------------------------
 // Fixture: valid ActBlue webhook payload

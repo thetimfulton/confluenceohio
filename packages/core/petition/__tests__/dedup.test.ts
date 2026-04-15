@@ -6,7 +6,7 @@ import {
   generateIpHash,
   generateReferralCode,
   generateVerificationToken,
-} from '../dedup.js';
+} from '../dedup';
 
 // ---------------------------------------------------------------------------
 // generateAddressHash

@@ -1,0 +1,22 @@
+{
+  "name": "confluenceohio",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run type-check",
+    "test": "turbo run test",
+    "dev:web": "turbo run dev --filter=web"
+  },
+  "devDependencies": {
+    "turbo": "^2",
+    "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "npm@10.9.2"
+}

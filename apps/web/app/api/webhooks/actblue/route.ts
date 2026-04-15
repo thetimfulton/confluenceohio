@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const donation = result.event;
+  const donation = result.event!;
 
   // 3. Idempotency — check for existing order before insert
   const supabase = createServiceClient();

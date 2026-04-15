@@ -84,7 +84,7 @@ export function RecentActivity({ items }: RecentActivityProps) {
         Recent Activity
       </h2>
 
-      <ul className="mt-4 divide-y divide-gray-100" role="list">
+      <ul className="mt-4 divide-y divide-gray-100">
         {items.map((item, idx) => {
           const config = ACTIVITY_CONFIG[item.activity_type] ?? {
             icon: FileSignature,

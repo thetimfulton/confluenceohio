@@ -8,6 +8,7 @@
     "./types": "./types.ts"
   },
   "scripts": {
+    "type-check": "tsc --noEmit",
     "seed": "tsx seed.ts"
   },
   "dependencies": {

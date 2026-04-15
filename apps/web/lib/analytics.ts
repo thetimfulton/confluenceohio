@@ -21,9 +21,9 @@ export function trackEvent(
   if (
     typeof window !== 'undefined' &&
     'posthog' in window &&
-    typeof (window as Record<string, unknown>).posthog === 'object'
+    typeof (window as unknown as Record<string, unknown>).posthog === 'object'
   ) {
-    const ph = (window as Record<string, unknown>).posthog as {
+    const ph = (window as unknown as Record<string, unknown>).posthog as {
       capture: (event: string, props?: EventProperties) => void;
     };
     ph.capture(eventName, properties);

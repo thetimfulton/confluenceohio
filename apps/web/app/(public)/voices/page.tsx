@@ -119,16 +119,9 @@ function FeaturedVoiceCard({
   voice: PublicVoice;
   isExample?: boolean;
 }) {
-  const Wrapper = isExample ? 'div' : Link;
-  const wrapperProps = isExample
-    ? {}
-    : { href: `/voices/${voice.slug}` as const };
-
-  return (
-    <Wrapper
-      {...(wrapperProps as Record<string, string>)}
-      className="relative block rounded-xl border border-gray-200 bg-white p-6 shadow-sm"
-    >
+  const cardClassName = "relative block rounded-xl border border-gray-200 bg-white p-6 shadow-sm";
+  const content = (
+    <>
       {isExample && (
         <span className="absolute right-3 top-3 rounded bg-gray-200 px-2 py-0.5 text-xs font-medium text-gray-600">
           Example
@@ -143,7 +136,17 @@ function FeaturedVoiceCard({
         {voice.author_name}
         {voice.author_neighborhood && ` \u00B7 ${voice.author_neighborhood}`}
       </p>
-    </Wrapper>
+    </>
+  );
+
+  if (isExample) {
+    return <div className={cardClassName}>{content}</div>;
+  }
+
+  return (
+    <Link href={`/voices/${voice.slug}`} className={cardClassName}>
+      {content}
+    </Link>
   );
 }
 

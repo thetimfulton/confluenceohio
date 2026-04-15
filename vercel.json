@@ -1,10 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "npx turbo run build --filter=web...",
+  "buildCommand": "npx turbo run build --filter=@confluenceohio/web...",
   "installCommand": "npm install",
   "framework": "nextjs",
   "outputDirectory": "apps/web/.next",
-  "ignoreCommand": "npx turbo-ignore web",
+  "ignoreCommand": "npx turbo-ignore @confluenceohio/web",
   "headers": [
     {
       "source": "/(.*)",

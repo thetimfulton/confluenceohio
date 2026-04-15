@@ -1,5 +1,5 @@
-import type { DonationEvent, RefundEvent } from './types.js';
-import { webhookPayloadSchema } from './types.js';
+import type { DonationEvent, RefundEvent } from './types';
+import { webhookPayloadSchema } from './types';
 
 /**
  * Parse and validate an ActBlue webhook payload.

@@ -20,6 +20,7 @@
     "./a11y/error-announcer": "./src/a11y/ErrorAnnouncer.tsx"
   },
   "scripts": {
+    "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },

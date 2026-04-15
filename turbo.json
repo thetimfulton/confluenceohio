@@ -19,7 +19,7 @@
       "outputs": []
     },
     "build": {
-      "dependsOn": ["^build", "validate-env"],
+      "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
         "SUPABASE_SERVICE_ROLE_KEY",

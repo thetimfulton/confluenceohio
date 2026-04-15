@@ -23,6 +23,7 @@
     "./analytics/compute-trend": "./analytics/compute-trend.ts"
   },
   "scripts": {
+    "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest"
   },

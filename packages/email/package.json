@@ -9,6 +9,7 @@
     "./templates": "./templates.ts"
   },
   "scripts": {
+    "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "setup": "tsx brevo-setup.ts"

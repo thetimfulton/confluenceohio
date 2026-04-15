@@ -262,9 +262,9 @@ export function SettingsClient({
           {/* AI Moderation Thresholds */}
           <div className="flex items-end gap-4">
             <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">
+              <span className="block text-sm font-medium text-gray-700">
                 AI Moderation Thresholds
-              </label>
+              </span>
               <p className="text-xs text-gray-500">
                 Auto-approve above first value, auto-reject below second value.
               </p>
